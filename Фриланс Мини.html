@@ -1,0 +1,527 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Фриланс Мини</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600&family=Unbounded:wght@500;600&display=swap">
+<style>
+/* Layout: sticky top bar with five section tabs, one 920px content column, list rows and detail panels. */
+:root{
+  --bg:#f2f4f9; --surface:#ffffff; --ink:#151a2d; --muted:#5a6279; --line:#dce0ec;
+  --accent:#3a3fd6; --accent-ink:#ffffff; --accent-soft:#e8e9fb;
+  --star:#d99a00; --ok:#17803d; --ok-soft:#e2f4e8; --warn:#a8530a; --warn-soft:#fdf0dc; --bad:#b8352b; --bad-soft:#fbe6e3;
+  --font-body:"Onest",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --font-display:"Unbounded","Onest",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0e1120; --surface:#171b2f; --ink:#eceffb; --muted:#9aa2c0; --line:#2a3050;
+    --accent:#8e93ff; --accent-ink:#0e1120; --accent-soft:#25294d;
+    --star:#f0b429; --ok:#5fd18a; --ok-soft:#173326; --warn:#f0a95a; --warn-soft:#3a2a15; --bad:#ff8a7e; --bad-soft:#3d1c19;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0e1120; --surface:#171b2f; --ink:#eceffb; --muted:#9aa2c0; --line:#2a3050;
+  --accent:#8e93ff; --accent-ink:#0e1120; --accent-soft:#25294d;
+  --star:#f0b429; --ok:#5fd18a; --ok-soft:#173326; --warn:#f0a95a; --warn-soft:#3a2a15; --bad:#ff8a7e; --bad-soft:#3d1c19;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--font-body);font-size:15px;line-height:1.5;margin:0}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+h1,h2,h3{margin:0;text-wrap:balance}
+h1{font-family:var(--font-display);font-weight:600;font-size:1.5rem;line-height:1.25}
+h2{font-size:1.1rem;font-weight:600}
+h3{font-size:1rem;font-weight:600}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--surface);border-bottom:1px solid var(--line)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
+.bar{max-width:920px;margin:0 auto;display:flex;align-items:center;gap:12px 20px;flex-wrap:wrap;padding:10px max(16px,env(safe-area-inset-right,0px)) 10px max(16px,env(safe-area-inset-left,0px))}
+.brand{font-family:var(--font-display);font-weight:600;font-size:1rem;color:var(--ink);margin-right:auto}
+.brand:hover{text-decoration:none}
+.brand span{color:var(--accent)}
+nav{display:flex;gap:2px;flex-wrap:wrap}
+nav a{color:var(--muted);padding:6px 12px;border-radius:8px;font-weight:500}
+nav a:hover{text-decoration:none;background:var(--accent-soft);color:var(--ink)}
+nav a[aria-current="page"]{background:var(--accent-soft);color:var(--accent)}
+.who{display:flex;align-items:center;gap:8px;font-size:.85rem;color:var(--muted)}
+.who select{max-width:190px}
+
+main{max-width:920px;margin:0 auto;padding-block:28px 56px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px 20px;flex-wrap:wrap;margin-bottom:18px}
+.head p{margin:6px 0 0;color:var(--muted)}
+.stack{display:flex;flex-direction:column;gap:12px}
+.row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.grow{flex:1;min-width:0}
+.muted{color:var(--muted)}
+.small{font-size:.85rem}
+
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px}
+.item{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px 18px;display:flex;gap:14px 20px;justify-content:space-between;align-items:flex-start;flex-wrap:wrap}
+.item .main{flex:1 1 320px;min-width:0}
+.item .side{text-align:right;display:flex;flex-direction:column;gap:6px;align-items:flex-end}
+.item h3 a{color:var(--ink)}
+.item h3 a:hover{color:var(--accent)}
+.price{font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap}
+.meta{display:flex;gap:4px 14px;flex-wrap:wrap;color:var(--muted);font-size:.85rem;margin-top:4px}
+.desc{margin:8px 0 0;overflow-wrap:anywhere}
+
+.chip{display:inline-block;padding:2px 10px;border-radius:99px;font-size:.78rem;font-weight:500;background:var(--accent-soft);color:var(--accent);white-space:nowrap}
+.chip.ok{background:var(--ok-soft);color:var(--ok)}
+.chip.warn{background:var(--warn-soft);color:var(--warn)}
+.chip.bad{background:var(--bad-soft);color:var(--bad)}
+.chip.plain{background:transparent;border:1px solid var(--line);color:var(--muted)}
+.skills{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.stars{color:var(--star);letter-spacing:1px;white-space:nowrap}
+.stars i{font-style:normal;color:var(--line)}
+.stars b{color:var(--ink);font-weight:600;letter-spacing:0;margin-left:6px}
+
+.btn{background:var(--accent);color:var(--accent-ink);border:0;border-radius:8px;padding:8px 16px;font-weight:600;cursor:pointer}
+.btn:hover{filter:brightness(1.08)}
+.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--line)}
+.btn.ghost:hover{background:var(--accent-soft);filter:none}
+.btn.sm{padding:5px 12px;font-size:.85rem}
+
+label{display:block;font-size:.85rem;font-weight:500;margin-bottom:4px}
+input,select,textarea{width:100%;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:8px 10px}
+textarea{resize:vertical;min-height:84px}
+.form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.form .full{grid-column:1/-1}
+.err{color:var(--bad);font-size:.85rem;min-height:1.2em;margin:0}
+.filters{display:grid;grid-template-columns:minmax(0,2fr) repeat(2,minmax(0,1fr));gap:10px;margin-bottom:16px}
+.empty{padding:28px;text-align:center;color:var(--muted);border:1px dashed var(--line);border-radius:12px}
+
+.avatar{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:600;flex:none}
+.person{display:flex;gap:14px;align-items:center;min-width:0}
+.section{margin-top:26px;display:flex;flex-direction:column;gap:12px}
+.cols{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;align-items:start}
+
+.chat{display:flex;flex-direction:column;gap:10px}
+.msgs{display:flex;flex-direction:column;gap:8px;max-height:340px;overflow-y:auto;padding:4px 2px}
+.msg{max-width:82%;padding:8px 12px;border-radius:12px;background:var(--bg);overflow-wrap:anywhere}
+.msg.me{align-self:flex-end;background:var(--accent-soft)}
+.msg time{display:block;font-size:.72rem;color:var(--muted);margin-top:2px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap}
+.tabs button{border:1px solid var(--line);background:transparent;border-radius:99px;padding:4px 12px;cursor:pointer;font-size:.85rem}
+.tabs button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.send{display:flex;gap:8px}
+
+@media (max-width:640px){
+  .form,.filters,.cols{grid-template-columns:1fr}
+  .item .side{text-align:left;align-items:flex-start}
+  .who select{max-width:140px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<header class="top">
+  <div class="bar">
+    <a class="brand" href="#orders">Фриланс<span>Мини</span></a>
+    <nav id="nav" aria-label="Разделы">
+      <a href="#orders" data-r="orders">Заказы</a>
+      <a href="#freelancers" data-r="freelancers">Исполнители</a>
+      <a href="#responses" data-r="responses">Отклики</a>
+      <a href="#profile" data-r="profile">Профиль</a>
+    </nav>
+    <div class="who"><label for="who" style="margin:0">Вы:</label><select id="who"></select></div>
+  </div>
+</header>
+<main id="app"></main>
+
+<script>
+(function(){
+  var KEY = "freelance-mini-v1";
+  var CATS = ["Дизайн","Веб-разработка","Программирование","Тексты","Маркетинг"];
+  var db, mem = null;
+  var ui = { q:"", cat:"", status:"", showNew:false, thread:null, fq:"", fsort:"rating", err:"" };
+
+  function now(){ return Date.now(); }
+  function ago(h){ return now() - h*3600*1000; }
+
+  function seed(){
+    return {
+      me: 6, seq: 100,
+      users: [
+        {id:1,name:"Алина Воронова",title:"UX/UI дизайнер",skills:["Figma","Интерфейсы","Брендинг"],city:"Москва",rate:"от 1 800 ₽/ч",bio:"Шесть лет делаю интерфейсы для мобильных приложений и интернет-магазинов. Показываю промежуточные варианты каждые два дня."},
+        {id:2,name:"Игорь Савельев",title:"Frontend-разработчик",skills:["JavaScript","React","Верстка"],city:"Казань",rate:"от 2 200 ₽/ч",bio:"Верстаю адаптивные сайты и делаю интерфейсы на React. Пишу аккуратный код с комментариями."},
+        {id:3,name:"Мария Ким",title:"Копирайтер",skills:["Статьи","SEO","Редактура"],city:"Санкт-Петербург",rate:"от 1 200 ₽/ч",bio:"Пишу про финансы, IT и образование. Сдаю тексты с источниками и проверкой на уникальность."},
+        {id:4,name:"Денис Орлов",title:"Backend-разработчик",skills:["Node.js","PostgreSQL","API"],city:"Новосибирск",rate:"от 2 800 ₽/ч",bio:"Проектирую API и базы данных. Настраиваю деплой и мониторинг."},
+        {id:5,name:"Софья Белова",title:"Маркетолог",skills:["SMM","Таргет","Аналитика"],city:"Екатеринбург",rate:"от 1 500 ₽/ч",bio:"Веду соцсети небольших магазинов и студий, считаю стоимость заявки и ежемесячно отчитываюсь."},
+        {id:6,name:"Артём Громов",title:"Предприниматель",skills:["Продукт","Организация"],city:"Москва",rate:"",bio:"Запускаю небольшие проекты и ищу исполнителей на разовые задачи."}
+      ],
+      orders: [
+        {id:1,title:"Лендинг для студии йоги",category:"Веб-разработка",budget:35000,deadline:"2026-12-15",authorId:5,status:"open",executorId:null,desc:"Нужна одностраничная адаптивная страница: расписание, цены, форма записи и карта. Макет есть в Figma.",created:ago(30)},
+        {id:2,title:"Логотип и фирменный стиль для кофейни",category:"Дизайн",budget:25000,deadline:"2026-12-05",authorId:6,status:"open",executorId:null,desc:"Кофейня на 20 посадочных мест. Нужен знак, палитра, шрифты и макеты стаканов и меню. Исходники сдать в векторе.",created:ago(20)},
+        {id:3,title:"Серия статей про финтех",category:"Тексты",budget:18000,deadline:"2026-12-10",authorId:6,status:"progress",executorId:3,desc:"Пять статей по 6 000 знаков для блога сервиса переводов. Нужны ссылки на источники.",created:ago(120)},
+        {id:4,title:"REST API для мобильного приложения",category:"Программирование",budget:80000,deadline:"2027-01-20",authorId:2,status:"open",executorId:null,desc:"Авторизация, профиль, лента заказов и уведомления. Стек на выбор исполнителя, нужна документация OpenAPI.",created:ago(8)},
+        {id:5,title:"Ведение Instagram интернет-магазина",category:"Маркетинг",budget:30000,deadline:"2026-12-30",authorId:4,status:"open",executorId:null,desc:"Магазин чая и посуды. Контент-план на месяц, 12 постов и 20 сторис, ответы на комментарии.",created:ago(3)},
+        {id:6,title:"Редизайн карточки товара",category:"Дизайн",budget:22000,deadline:"2026-11-28",authorId:6,status:"done",executorId:1,desc:"Обновить страницу товара в интернет-магазине: галерея, блок отзывов, мобильная версия.",created:ago(300)}
+      ],
+      responses: [
+        {id:1,orderId:2,userId:1,price:24000,message:"Здравствуйте! Нарисую три направления знака, после выбора доработаю и соберу фирменный стиль. Срок 10 дней.",status:"new",created:ago(15)},
+        {id:2,orderId:2,userId:5,price:27000,message:"Могу взять брендинг вместе с оформлением соцсетей кофейни. Покажу похожие проекты.",status:"new",created:ago(12)},
+        {id:3,orderId:3,userId:3,price:18000,message:"Пишу про финтех третий год. Первые две статьи пришлю в течение недели.",status:"accepted",created:ago(110)},
+        {id:4,orderId:6,userId:1,price:22000,message:"Возьмусь, макеты покажу в Figma.",status:"accepted",created:ago(290)},
+        {id:5,orderId:1,userId:2,price:32000,message:"Сверстаю по макету, подключу форму записи и проверю на телефонах. Срок 7 дней.",status:"new",created:ago(20)},
+        {id:6,orderId:1,userId:6,price:30000,message:"Готов взяться за лендинг, нужен срок до 15 декабря. Могу показать готовые работы.",status:"new",created:ago(4)}
+      ],
+      messages: [
+        {id:1,responseId:3,from:6,text:"Добрый день! Пришлите, пожалуйста, план первых двух статей.",ts:ago(100)},
+        {id:2,responseId:3,from:3,text:"Здравствуйте! План отправлю сегодня вечером, начну с обзора платёжных API.",ts:ago(99)},
+        {id:3,responseId:1,from:1,text:"Могу показать эскизы уже через три дня, если пришлёте пожелания по цветам.",ts:ago(14)},
+        {id:4,responseId:6,from:6,text:"Здравствуйте, расскажите подробнее про расписание на странице.",ts:ago(3.5)}
+      ],
+      reviews: [
+        {id:1,orderId:6,fromId:6,toId:1,rating:5,text:"Быстро и аккуратно, учла все правки по карточке.",ts:ago(200)},
+        {id:2,orderId:6,fromId:1,toId:6,rating:5,text:"Чёткое задание и быстрые ответы.",ts:ago(199)},
+        {id:3,orderId:null,fromId:5,toId:2,rating:5,text:"Верстка без замечаний, сдал раньше срока.",ts:ago(900)},
+        {id:4,orderId:null,fromId:4,toId:2,rating:4,text:"Хороший результат, пару мелочей поправили вместе.",ts:ago(800)},
+        {id:5,orderId:null,fromId:5,toId:3,rating:5,text:"Тексты чистые, источники приложила.",ts:ago(700)},
+        {id:6,orderId:null,fromId:1,toId:4,rating:5,text:"Продумал структуру базы и документацию.",ts:ago(650)},
+        {id:7,orderId:null,fromId:2,toId:4,rating:4,text:"Надёжно, но отвечает по вечерам.",ts:ago(600)},
+        {id:8,orderId:null,fromId:4,toId:5,rating:5,text:"Продажи из соцсетей выросли, отчёты понятные.",ts:ago(500)}
+      ]
+    };
+  }
+
+  function load(){
+    try{ var s = localStorage.getItem(KEY); if(s) return JSON.parse(s); }catch(e){}
+    return mem ? JSON.parse(mem) : null;
+  }
+  function save(){
+    var s = JSON.stringify(db); mem = s;
+    try{ localStorage.setItem(KEY, s); }catch(e){}
+  }
+  db = load() || seed();
+  save();
+
+  /* helpers */
+  function $(s,r){ return (r||document).querySelector(s); }
+  function esc(v){ return String(v==null?"":v).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];}); }
+  function money(n){ return Number(n).toLocaleString("ru-RU")+" ₽"; }
+  function fdate(s){ try{ return new Date(s+"T00:00:00").toLocaleDateString("ru-RU",{day:"numeric",month:"long",year:"numeric"}); }catch(e){ return s; } }
+  function ftime(t){ var d=new Date(t); return d.toLocaleDateString("ru-RU",{day:"numeric",month:"short"})+", "+d.toLocaleTimeString("ru-RU",{hour:"2-digit",minute:"2-digit"}); }
+  function user(id){ return db.users.find(function(u){return u.id===id;}); }
+  function order(id){ return db.orders.find(function(o){return o.id===id;}); }
+  function resp(id){ return db.responses.find(function(r){return r.id===id;}); }
+  function me(){ return user(db.me); }
+  function nid(){ db.seq += 1; return db.seq; }
+  function ratingOf(uid){
+    var rs = db.reviews.filter(function(r){return r.toId===uid;});
+    if(!rs.length) return {avg:0,count:0};
+    var sum = rs.reduce(function(a,r){return a+r.rating;},0);
+    return {avg:sum/rs.length,count:rs.length};
+  }
+  function stars(uid){
+    var r = ratingOf(uid);
+    if(!r.count) return '<span class="muted small">Пока нет оценок</span>';
+    var full = Math.round(r.avg), s = "";
+    for(var i=1;i<=5;i++) s += i<=full ? "★" : "<i>★</i>";
+    return '<span class="stars" title="Средняя оценка">'+s+'<b>'+r.avg.toFixed(1).replace(".",",")+'</b></span> <span class="muted small">('+r.count+')</span>';
+  }
+  function starsFixed(n){ var s=""; for(var i=1;i<=5;i++) s += i<=n ? "★" : "<i>★</i>"; return '<span class="stars">'+s+'</span>'; }
+  function avatar(u,size){
+    var ini = u.name.split(/\s+/).map(function(w){return w[0];}).slice(0,2).join("").toUpperCase();
+    var st = "background:hsl("+((u.id*57)%360)+" 48% 40%)"+(size?";width:"+size+"px;height:"+size+"px;font-size:.8rem":"");
+    return '<div class="avatar" style="'+st+'" aria-hidden="true">'+esc(ini)+'</div>';
+  }
+  var ST_ORDER = {open:["Открыт",""],progress:["В работе","warn"],done:["Завершён","ok"]};
+  var ST_RESP = {"new":["Ожидает ответа","plain"],accepted:["Принят","ok"],rejected:["Отклонён","bad"]};
+  function chip(map,k){ return '<span class="chip '+map[k][1]+'">'+map[k][0]+'</span>'; }
+
+  /* router */
+  function parse(){
+    var h = location.hash.slice(1) || "orders", m;
+    if((m = /^order-(\d+)$/.exec(h))) return {name:"order",id:+m[1]};
+    if((m = /^user-(\d+)$/.exec(h))) return {name:"user",id:+m[1]};
+    if(["orders","freelancers","responses","profile"].indexOf(h)>=0) return {name:h};
+    return {name:"orders"};
+  }
+  function go(h){ if(location.hash.slice(1)===h) render(); else location.hash = h; }
+
+  function render(){
+    var r = parse(), app = $("#app"), cur = r.name;
+    if(r.name==="order") cur="orders";
+    if(r.name==="user") cur = r.id===db.me ? "profile" : "freelancers";
+    document.querySelectorAll("#nav a").forEach(function(a){
+      if(a.getAttribute("data-r")===cur) a.setAttribute("aria-current","page"); else a.removeAttribute("aria-current");
+    });
+    var sel = $("#who");
+    sel.innerHTML = db.users.map(function(u){ return '<option value="'+u.id+'"'+(u.id===db.me?" selected":"")+'>'+esc(u.name)+'</option>'; }).join("");
+    ui.err = "";
+    if(r.name==="orders") app.innerHTML = vOrders();
+    else if(r.name==="order") app.innerHTML = vOrder(r.id);
+    else if(r.name==="freelancers") app.innerHTML = vFreelancers();
+    else if(r.name==="responses") app.innerHTML = vResponses();
+    else if(r.name==="profile") app.innerHTML = vUser(db.me);
+    else if(r.name==="user") app.innerHTML = vUser(r.id);
+    if(r.name==="orders") drawOrders();
+    if(r.name==="freelancers") drawFreelancers();
+    var box = $(".msgs"); if(box) box.scrollTop = box.scrollHeight;
+  }
+
+  /* ---------- Заказы ---------- */
+  function vOrders(){
+    var cats = '<option value="">Все категории</option>'+CATS.map(function(c){return '<option'+(ui.cat===c?" selected":"")+'>'+c+'</option>';}).join("");
+    var sts = '<option value="">Любой статус</option>'+Object.keys(ST_ORDER).map(function(k){return '<option value="'+k+'"'+(ui.status===k?" selected":"")+'>'+ST_ORDER[k][0]+'</option>';}).join("");
+    var form = "";
+    if(ui.showNew){
+      form = '<form class="panel form" id="f-order" style="margin-bottom:16px" novalidate>'+
+        '<div class="full"><label for="o-title">Название заказа</label><input id="o-title" maxlength="90" placeholder="Например, Логотип для кофейни"></div>'+
+        '<div><label for="o-cat">Категория</label><select id="o-cat">'+CATS.map(function(c){return '<option>'+c+'</option>';}).join("")+'</select></div>'+
+        '<div><label for="o-budget">Бюджет, ₽</label><input id="o-budget" type="number" min="100" step="100" placeholder="20000"></div>'+
+        '<div><label for="o-deadline">Срок сдачи</label><input id="o-deadline" type="date"></div>'+
+        '<div class="full"><label for="o-desc">Описание</label><textarea id="o-desc" placeholder="Что нужно сделать, какие материалы есть, что считается результатом"></textarea></div>'+
+        '<div class="full row"><button class="btn" type="submit">Опубликовать заказ</button><button class="btn ghost" type="button" data-act="toggle-new">Отмена</button><p class="err" id="o-err" role="alert"></p></div>'+
+      '</form>';
+    }
+    return '<div class="head"><div><h1>Заказы</h1><p>Найдите задачу и откликнитесь или опубликуйте свою.</p></div>'+
+      '<button class="btn" data-act="toggle-new">'+(ui.showNew?"Скрыть форму":"Новый заказ")+'</button></div>'+form+
+      '<div class="filters"><div><label for="q" class="small muted">Поиск</label><input id="q" type="search" placeholder="Название или описание" value="'+esc(ui.q)+'"></div>'+
+      '<div><label for="cat" class="small muted">Категория</label><select id="cat">'+cats+'</select></div>'+
+      '<div><label for="st" class="small muted">Статус</label><select id="st">'+sts+'</select></div></div>'+
+      '<div class="stack" id="olist"></div>';
+  }
+  function drawOrders(){
+    var q = ui.q.trim().toLowerCase();
+    var list = db.orders.filter(function(o){
+      if(ui.cat && o.category!==ui.cat) return false;
+      if(ui.status && o.status!==ui.status) return false;
+      if(q && (o.title+" "+o.desc).toLowerCase().indexOf(q)<0) return false;
+      return true;
+    }).sort(function(a,b){return b.created-a.created;});
+    $("#olist").innerHTML = list.length ? list.map(function(o){
+      var a = user(o.authorId), n = db.responses.filter(function(r){return r.orderId===o.id;}).length;
+      return '<article class="item"><div class="main"><h3><a href="#order-'+o.id+'">'+esc(o.title)+'</a></h3>'+
+        '<div class="meta"><span>'+esc(o.category)+'</span><span>до '+fdate(o.deadline)+'</span><span>'+esc(a.name)+(a.id===db.me?" (вы)":"")+'</span><span>откликов: '+n+'</span></div>'+
+        '<p class="desc">'+esc(o.desc.length>150?o.desc.slice(0,150)+"…":o.desc)+'</p></div>'+
+        '<div class="side"><span class="price">'+money(o.budget)+'</span>'+chip(ST_ORDER,o.status)+'</div></article>';
+    }).join("") : '<div class="empty">По этим условиям заказов нет. Измените фильтры или опубликуйте свой заказ.</div>';
+  }
+
+  /* ---------- Заказ ---------- */
+  function vOrder(id){
+    var o = order(id);
+    if(!o) return '<div class="empty">Такого заказа нет. <a href="#orders">Вернуться к списку</a></div>';
+    var author = user(o.authorId), mine = o.authorId===db.me;
+    var rs = db.responses.filter(function(r){return r.orderId===o.id;});
+    var html = '<p class="small"><a href="#orders">← Все заказы</a></p>'+
+      '<div class="panel stack"><div class="row" style="justify-content:space-between;align-items:flex-start"><h1 class="grow">'+esc(o.title)+'</h1>'+chip(ST_ORDER,o.status)+'</div>'+
+      '<div class="meta" style="margin:0"><span>'+esc(o.category)+'</span><span>Бюджет: <b class="price">'+money(o.budget)+'</b></span><span>Срок: '+fdate(o.deadline)+'</span><span>Заказчик: <a href="#user-'+author.id+'">'+esc(author.name)+'</a>'+(mine?" (вы)":"")+'</span>'+
+      (o.executorId?'<span>Исполнитель: <a href="#user-'+o.executorId+'">'+esc(user(o.executorId).name)+'</a></span>':"")+'</div>'+
+      '<p class="desc" style="margin:0">'+esc(o.desc)+'</p>'+
+      (mine && o.status==="progress" ? '<div><button class="btn" data-act="finish" data-id="'+o.id+'">Принять работу и завершить заказ</button></div>':"")+
+      '</div>';
+
+    var thread = null, mineResp = rs.find(function(r){return r.userId===db.me;});
+    if(mine){
+      html += '<section class="section"><h2>Отклики ('+rs.length+')</h2>';
+      if(!rs.length) html += '<div class="empty">Откликов пока нет.</div>';
+      else{
+        if(!rs.some(function(r){return r.id===ui.thread;})) ui.thread = (rs.find(function(r){return r.status==="accepted";})||rs[0]).id;
+        thread = resp(ui.thread);
+        html += '<div class="stack">'+rs.map(function(r){
+          var u = user(r.userId), rt = ratingOf(u.id);
+          return '<article class="item"><div class="main"><div class="person">'+avatar(u)+'<div class="grow"><h3><a href="#user-'+u.id+'">'+esc(u.name)+'</a></h3><div class="small">'+stars(u.id)+'</div></div></div>'+
+            '<p class="desc">'+esc(r.message)+'</p></div>'+
+            '<div class="side"><span class="price">'+money(r.price)+'</span>'+chip(ST_RESP,r.status)+
+            '<div class="row">'+(o.status==="open"&&r.status==="new"?'<button class="btn sm" data-act="accept" data-id="'+r.id+'">Выбрать исполнителем</button>':"")+
+            '<button class="btn sm ghost" data-act="thread" data-id="'+r.id+'">Чат</button></div></div></article>';
+        }).join("")+'</div>';
+      }
+      html += '</section>';
+    }else{
+      if(mineResp){
+        thread = mineResp; ui.thread = mineResp.id;
+        html += '<section class="section"><h2>Ваш отклик</h2><article class="item"><div class="main"><p class="desc" style="margin:0">'+esc(mineResp.message)+'</p></div><div class="side"><span class="price">'+money(mineResp.price)+'</span>'+chip(ST_RESP,mineResp.status)+'</div></article></section>';
+      }else if(o.status==="open"){
+        html += '<section class="section"><h2>Откликнуться</h2><form class="panel form" id="f-resp" data-id="'+o.id+'" novalidate>'+
+          '<div><label for="r-price">Ваша цена, ₽</label><input id="r-price" type="number" min="100" step="100" value="'+o.budget+'"></div>'+
+          '<div class="full"><label for="r-msg">Сообщение заказчику</label><textarea id="r-msg" placeholder="Чем похожим вы занимались, какой срок и что нужно уточнить"></textarea></div>'+
+          '<div class="full row"><button class="btn" type="submit">Отправить отклик</button><p class="err" id="r-err" role="alert"></p></div></form></section>';
+      }else{
+        html += '<section class="section"><div class="empty">Заказ уже не принимает отклики.</div></section>';
+      }
+    }
+
+    if(thread){
+      var other = user(mine ? thread.userId : o.authorId);
+      var msgs = db.messages.filter(function(m){return m.responseId===thread.id;}).sort(function(a,b){return a.ts-b.ts;});
+      html += '<section class="section"><h2>Чат с '+esc(other.name)+'</h2><div class="panel chat">'+
+        (mine && rs.length>1 ? '<div class="tabs">'+rs.map(function(r){return '<button type="button" data-act="thread" data-id="'+r.id+'" aria-pressed="'+(r.id===thread.id)+'">'+esc(user(r.userId).name)+'</button>';}).join("")+'</div>':"")+
+        '<div class="msgs" aria-live="polite">'+(msgs.length?msgs.map(function(m){
+          return '<div class="msg'+(m.from===db.me?" me":"")+'">'+esc(m.text)+'<time>'+esc(user(m.from).name)+', '+ftime(m.ts)+'</time></div>';
+        }).join(""):'<p class="muted small" style="margin:8px 0">Сообщений пока нет. Напишите первым.</p>')+'</div>'+
+        '<form class="send" id="f-msg" data-id="'+thread.id+'"><input id="m-text" aria-label="Сообщение" placeholder="Напишите сообщение" autocomplete="off"><button class="btn" type="submit">Отправить</button></form></div></section>';
+    }
+
+    if(o.status==="done" && (db.me===o.authorId || db.me===o.executorId)){
+      var target = db.me===o.authorId ? o.executorId : o.authorId;
+      var has = db.reviews.some(function(r){return r.orderId===o.id && r.fromId===db.me;});
+      html += '<section class="section"><h2>Отзыв</h2>';
+      if(has) html += '<div class="panel muted">Вы уже оставили отзыв по этому заказу. Спасибо.</div>';
+      else html += '<form class="panel form" id="f-review" data-id="'+o.id+'" data-to="'+target+'" novalidate>'+
+        '<div><label for="v-rate">Оценка для '+esc(user(target).name)+'</label><select id="v-rate"><option value="5">5 — отлично</option><option value="4">4 — хорошо</option><option value="3">3 — нормально</option><option value="2">2 — плохо</option><option value="1">1 — очень плохо</option></select></div>'+
+        '<div class="full"><label for="v-text">Отзыв</label><textarea id="v-text" placeholder="Как прошла работа, что понравилось, что можно улучшить"></textarea></div>'+
+        '<div class="full row"><button class="btn" type="submit">Опубликовать отзыв</button><p class="err" id="v-err" role="alert"></p></div></form>';
+      html += '</section>';
+    }
+    return html;
+  }
+
+  /* ---------- Исполнители ---------- */
+  function vFreelancers(){
+    return '<div class="head"><div><h1>Исполнители</h1><p>Выбирайте по навыкам и оценкам заказчиков.</p></div></div>'+
+      '<div class="filters" style="grid-template-columns:minmax(0,2fr) minmax(0,1fr)"><div><label for="fq" class="small muted">Поиск</label><input id="fq" type="search" placeholder="Имя, специальность или навык" value="'+esc(ui.fq)+'"></div>'+
+      '<div><label for="fs" class="small muted">Порядок</label><select id="fs"><option value="rating"'+(ui.fsort==="rating"?" selected":"")+'>По рейтингу</option><option value="name"'+(ui.fsort==="name"?" selected":"")+'>По имени</option></select></div></div>'+
+      '<div class="stack" id="flist"></div>';
+  }
+  function drawFreelancers(){
+    var q = ui.fq.trim().toLowerCase();
+    var list = db.users.filter(function(u){
+      return !q || (u.name+" "+u.title+" "+u.skills.join(" ")).toLowerCase().indexOf(q)>=0;
+    }).sort(function(a,b){
+      if(ui.fsort==="name") return a.name.localeCompare(b.name,"ru");
+      var ra = ratingOf(a.id), rb = ratingOf(b.id);
+      return rb.avg-ra.avg || rb.count-ra.count;
+    });
+    $("#flist").innerHTML = list.length ? list.map(function(u){
+      return '<article class="item"><div class="main"><div class="person">'+avatar(u)+'<div class="grow"><h3><a href="#user-'+u.id+'">'+esc(u.name)+'</a>'+(u.id===db.me?' <span class="chip plain">это вы</span>':"")+'</h3>'+
+        '<div class="meta" style="margin:0"><span>'+esc(u.title)+'</span>'+(u.city?'<span>'+esc(u.city)+'</span>':"")+'</div></div></div>'+
+        '<div class="skills">'+u.skills.map(function(s){return '<span class="chip">'+esc(s)+'</span>';}).join("")+'</div></div>'+
+        '<div class="side"><div>'+stars(u.id)+'</div>'+(u.rate?'<span class="price small">'+esc(u.rate)+'</span>':"")+'</div></article>';
+    }).join("") : '<div class="empty">Никого не нашли. Попробуйте другой навык.</div>';
+  }
+
+  /* ---------- Отклики ---------- */
+  function vResponses(){
+    var mineR = db.responses.filter(function(r){return r.userId===db.me;}).sort(function(a,b){return b.created-a.created;});
+    var myOrders = db.orders.filter(function(o){return o.authorId===db.me;});
+    var inc = db.responses.filter(function(r){ var o=order(r.orderId); return o && o.authorId===db.me; }).sort(function(a,b){return b.created-a.created;});
+    function row(r,incoming){
+      var o = order(r.orderId), u = user(r.userId);
+      var who = incoming ? 'Исполнитель: <a href="#user-'+u.id+'">'+esc(u.name)+'</a>' : 'Заказчик: <a href="#user-'+o.authorId+'">'+esc(user(o.authorId).name)+'</a>';
+      return '<article class="item"><div class="main"><h3><a href="#order-'+o.id+'">'+esc(o.title)+'</a></h3><div class="meta"><span>'+who+'</span><span>'+ftime(r.created)+'</span></div>'+
+        '<p class="desc">'+esc(r.message.length>130?r.message.slice(0,130)+"…":r.message)+'</p></div>'+
+        '<div class="side"><span class="price">'+money(r.price)+'</span>'+chip(ST_RESP,r.status)+
+        '<button class="btn sm ghost" data-act="open-chat" data-id="'+r.id+'" data-order="'+o.id+'">Открыть чат</button></div></article>';
+    }
+    return '<div class="head"><div><h1>Отклики</h1><p>Ваши предложения и отклики на ваши заказы.</p></div></div>'+
+      '<section class="section" style="margin-top:0"><h2>Мои отклики ('+mineR.length+')</h2>'+(mineR.length?'<div class="stack">'+mineR.map(function(r){return row(r,false);}).join("")+'</div>':'<div class="empty">Вы пока ни на что не откликались. <a href="#orders">Найти заказ</a></div>')+'</section>'+
+      '<section class="section"><h2>Отклики на мои заказы ('+inc.length+')</h2>'+(inc.length?'<div class="stack">'+inc.map(function(r){return row(r,true);}).join("")+'</div>':'<div class="empty">'+(myOrders.length?"На ваши заказы пока никто не откликнулся.":"У вас нет опубликованных заказов. Опубликуйте первый на странице заказов.")+'</div>')+'</section>';
+  }
+
+  /* ---------- Профиль ---------- */
+  function vUser(id){
+    var u = user(id);
+    if(!u) return '<div class="empty">Профиль не найден. <a href="#freelancers">К исполнителям</a></div>';
+    var own = id===db.me;
+    var revs = db.reviews.filter(function(r){return r.toId===id;}).sort(function(a,b){return b.ts-a.ts;});
+    var done = db.orders.filter(function(o){return o.status==="done" && (o.executorId===id||o.authorId===id);}).length;
+    var html = own ? '' : '<p class="small"><a href="#freelancers">← Все исполнители</a></p>';
+    if(own){
+      html += '<div class="head"><div><h1>Ваш профиль</h1><p>Так вас видят заказчики и исполнители.</p></div><button class="btn ghost" data-act="new-user">Создать ещё один аккаунт</button></div>'+
+        '<form class="panel form" id="f-profile" novalidate>'+
+        '<div><label for="p-name">Имя</label><input id="p-name" value="'+esc(u.name)+'" maxlength="60"></div>'+
+        '<div><label for="p-title">Специальность</label><input id="p-title" value="'+esc(u.title)+'" maxlength="60" placeholder="Например, Копирайтер"></div>'+
+        '<div><label for="p-city">Город</label><input id="p-city" value="'+esc(u.city)+'" maxlength="40"></div>'+
+        '<div><label for="p-rate">Ставка</label><input id="p-rate" value="'+esc(u.rate)+'" maxlength="30" placeholder="от 1 500 ₽/ч"></div>'+
+        '<div class="full"><label for="p-skills">Навыки через запятую</label><input id="p-skills" value="'+esc(u.skills.join(", "))+'" placeholder="Figma, Верстка, Тексты"></div>'+
+        '<div class="full"><label for="p-bio">О себе</label><textarea id="p-bio">'+esc(u.bio)+'</textarea></div>'+
+        '<div class="full row"><button class="btn" type="submit">Сохранить</button><span class="small" id="p-ok" role="status" style="color:var(--ok)"></span><p class="err" id="p-err" role="alert"></p></div></form>';
+    }else{
+      html += '<div class="panel stack"><div class="person">'+avatar(u,56)+'<div class="grow"><h1>'+esc(u.name)+'</h1><div class="meta" style="margin:0"><span>'+esc(u.title)+'</span>'+(u.city?'<span>'+esc(u.city)+'</span>':"")+(u.rate?'<span>'+esc(u.rate)+'</span>':"")+'</div></div></div>'+
+        '<div class="skills" style="margin:0">'+u.skills.map(function(s){return '<span class="chip">'+esc(s)+'</span>';}).join("")+'</div>'+
+        (u.bio?'<p class="desc" style="margin:0">'+esc(u.bio)+'</p>':"")+'</div>';
+    }
+    html += '<section class="section"><div class="row" style="justify-content:space-between"><h2>Отзывы ('+revs.length+')</h2><div>'+stars(id)+' <span class="muted small">· завершённых заказов: '+done+'</span></div></div>'+
+      (revs.length?'<div class="stack">'+revs.map(function(r){
+        var f = user(r.fromId), o = r.orderId?order(r.orderId):null;
+        return '<article class="item"><div class="main"><div class="row" style="gap:8px"><b>'+esc(f?f.name:"Пользователь")+'</b>'+starsFixed(r.rating)+'</div><p class="desc">'+esc(r.text||"Без комментария")+'</p>'+
+          '<div class="meta">'+(o?'<span>Заказ: <a href="#order-'+o.id+'">'+esc(o.title)+'</a></span>':"")+'<span>'+ftime(r.ts)+'</span></div></div></article>';
+      }).join("")+'</div>':'<div class="empty">Отзывов пока нет. Они появятся после завершённых заказов.</div>')+'</section>';
+    return html;
+  }
+
+  /* ---------- события ---------- */
+  document.addEventListener("click",function(e){
+    var b = e.target.closest("[data-act]"); if(!b) return;
+    var act = b.getAttribute("data-act"), id = +b.getAttribute("data-id");
+    if(act==="toggle-new"){ ui.showNew = !ui.showNew; render(); if(ui.showNew){ var t=$("#o-title"); if(t) t.focus(); } }
+    else if(act==="thread"){ ui.thread = id; render(); }
+    else if(act==="open-chat"){ ui.thread = id; go("order-"+b.getAttribute("data-order")); }
+    else if(act==="accept"){
+      var r = resp(id), o = order(r.orderId);
+      db.responses.forEach(function(x){ if(x.orderId===o.id) x.status = x.id===id ? "accepted" : "rejected"; });
+      o.status = "progress"; o.executorId = r.userId; o.budget = r.price; ui.thread = id; save(); render();
+    }
+    else if(act==="finish"){ var o2 = order(id); o2.status = "done"; save(); render(); }
+    else if(act==="new-user"){
+      var n = db.users.length+1, nu = {id:nid(),name:"Новый пользователь "+n,title:"",skills:[],city:"",rate:"",bio:""};
+      db.users.push(nu); db.me = nu.id; save(); go("profile"); render();
+      var pn = $("#p-name"); if(pn){ pn.focus(); pn.select(); }
+    }
+  });
+
+  document.addEventListener("input",function(e){
+    var t = e.target.id;
+    if(t==="q"){ ui.q = e.target.value; drawOrders(); }
+    else if(t==="fq"){ ui.fq = e.target.value; drawFreelancers(); }
+  });
+  document.addEventListener("change",function(e){
+    var t = e.target.id;
+    if(t==="cat"){ ui.cat = e.target.value; drawOrders(); }
+    else if(t==="st"){ ui.status = e.target.value; drawOrders(); }
+    else if(t==="fs"){ ui.fsort = e.target.value; drawFreelancers(); }
+    else if(t==="who"){ db.me = +e.target.value; ui.thread = null; save(); render(); }
+  });
+
+  function say(id,msg){ var el=$("#"+id); if(el) el.textContent = msg; }
+
+  document.addEventListener("submit",function(e){
+    var f = e.target; e.preventDefault();
+    if(f.id==="f-order"){
+      var title=$("#o-title").value.trim(), budget=+$("#o-budget").value, dl=$("#o-deadline").value, desc=$("#o-desc").value.trim();
+      if(title.length<4) return say("o-err","Введите название не короче 4 символов.");
+      if(!(budget>=100)) return say("o-err","Укажите бюджет от 100 ₽.");
+      if(!dl) return say("o-err","Выберите срок сдачи.");
+      if(desc.length<10) return say("o-err","Опишите задачу хотя бы в одном предложении.");
+      var o = {id:nid(),title:title,category:$("#o-cat").value,budget:budget,deadline:dl,authorId:db.me,status:"open",executorId:null,desc:desc,created:now()};
+      db.orders.push(o); ui.showNew = false; ui.cat=""; ui.status=""; ui.q=""; save(); render();
+    }
+    else if(f.id==="f-resp"){
+      var oid = +f.getAttribute("data-id"), price=+$("#r-price").value, msg=$("#r-msg").value.trim();
+      if(!(price>=100)) return say("r-err","Укажите цену от 100 ₽.");
+      if(msg.length<10) return say("r-err","Напишите заказчику хотя бы пару предложений.");
+      if(db.responses.some(function(r){return r.orderId===oid&&r.userId===db.me;})) return say("r-err","Вы уже откликались на этот заказ.");
+      var r = {id:nid(),orderId:oid,userId:db.me,price:price,message:msg,status:"new",created:now()};
+      db.responses.push(r); ui.thread = r.id; save(); render();
+    }
+    else if(f.id==="f-msg"){
+      var txt = $("#m-text").value.trim(); if(!txt) return;
+      db.messages.push({id:nid(),responseId:+f.getAttribute("data-id"),from:db.me,text:txt,ts:now()}); save(); render();
+      var inp = $("#m-text"); if(inp) inp.focus();
+    }
+    else if(f.id==="f-review"){
+      var text = $("#v-text").value.trim();
+      if(text.length<5) return say("v-err","Напишите пару слов о работе.");
+      db.reviews.push({id:nid(),orderId:+f.getAttribute("data-id"),fromId:db.me,toId:+f.getAttribute("data-to"),rating:+$("#v-rate").value,text:text,ts:now()}); save(); render();
+    }
+    else if(f.id==="f-profile"){
+      var name = $("#p-name").value.trim();
+      if(name.length<2) return say("p-err","Введите имя.");
+      var u = me();
+      u.name = name; u.title = $("#p-title").value.trim(); u.city = $("#p-city").value.trim(); u.rate = $("#p-rate").value.trim();
+      u.skills = $("#p-skills").value.split(",").map(function(s){return s.trim();}).filter(Boolean).slice(0,10);
+      u.bio = $("#p-bio").value.trim(); save(); render(); say("p-ok","Сохранено");
+    }
+  });
+
+  window.addEventListener("hashchange",function(){ window.scrollTo(0,0); render(); });
+  render();
+})();
+</script>
+
+</body></html>
